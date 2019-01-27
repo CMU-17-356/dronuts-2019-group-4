@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/CMU-17-356/dronuts-2019-group-4.svg?branch=master)](https://travis-ci.com/CMU-17-356/dronuts-2019-group-4)
+
 # dronut-starter
 In order to get ready to write productive code, complete the following steps during Sprint 0:
 
