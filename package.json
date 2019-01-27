@@ -19,6 +19,7 @@
   "dependencies": {
     "eslint": "^5.12.1",
     "loopback": "^3.24.2",
-    "npm-check": "^5.9.0"
+    "npm-check": "^5.9.0",
+    "react": "^16.7.0"
   }
 }
