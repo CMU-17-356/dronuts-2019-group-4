@@ -1,0 +1,19 @@
+{
+  "name": "Message",
+  "base": "Homepage",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "Text": {
+      "type": "string",
+      "required": true,
+      "default": "\"Hello World\""
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
