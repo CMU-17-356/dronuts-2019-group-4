@@ -11,7 +11,7 @@ env:
     - DOCKER_TLS_VERIFY="1"
     - DOCKER_HOST="tcp://<AZURE_VM_IP>:2376"
     - DOCKER_CERT_PATH="$TRAVIS_BUILD_DIR/azure"
-    - DOCKER_MACHINE_NAME="project1"
+    - DOCKER_MACHINE_NAME="dronuts-2019-group-4"
 
 script:
   - npm test
