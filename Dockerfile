@@ -11,6 +11,6 @@ RUN npm install
 # Copy App Source
 COPY . .
 #TODO Run any build scripts here
-RUN npm start
+
 EXPOSE 80
 CMD [ "npm", "start" ]
