@@ -1,8 +1,8 @@
 FROM node:8-alpine
-MAINTAINER <GROUP_NAME_HERE>
+MAINTAINER dronuts-2019-group-4
 
 # Change working directory
-WORKDIR /usr/src/app
+WORKDIR dronuts
 
 # Install App Dependencies
 COPY dronuts/package*.json ./
