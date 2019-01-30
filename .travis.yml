@@ -10,7 +10,7 @@ env:
   global:
     - DOCKER_TLS_VERIFY="1"
     - DOCKER_HOST="tcp://104.42.72.216:2376"
-    - DOCKER_CERT_PATH="azure/dronuts-2019-group-4"
+    - DOCKER_CERT_PATH="azure"
     - DOCKER_MACHINE_NAME="dronuts-2019-group-4"
 
 script:
