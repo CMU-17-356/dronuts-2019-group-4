@@ -5,8 +5,5 @@ services:
     container_name: dronuts-2019-group-4
     build: ./
     ports:
-      - target: 80
-        published: 3000
-        protocol: tcp
-        mode: host
+      - "80:80"
     restart: always
