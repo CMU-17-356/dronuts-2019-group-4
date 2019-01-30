@@ -1,8 +1,8 @@
 version: '3'
 services:
 
-  your_app:
-    container_name: your_app
+  dronuts-2019-group-4:
+    container_name: dronuts-2019-group-4
     build: ./
     ports:
       - "80:80"
