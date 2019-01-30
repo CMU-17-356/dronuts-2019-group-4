@@ -9,7 +9,7 @@ services:
 env:
   global:
     - DOCKER_TLS_VERIFY="1"
-    - DOCKER_HOST="tcp://13.91.133.11:2376"
+    - DOCKER_HOST="tcp://104.42.72.216:2376"
     - DOCKER_CERT_PATH="azure"
     - DOCKER_MACHINE_NAME="dronuts-2019-group-4"
 
