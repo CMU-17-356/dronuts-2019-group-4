@@ -13,4 +13,4 @@ COPY dronuts/* ./
 #TODO Run any build scripts here
 
 EXPOSE 80
-CMD [ "npm", "start" ]
+CMD ["npm", "start" ]

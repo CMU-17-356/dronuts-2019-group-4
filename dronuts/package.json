@@ -6,7 +6,7 @@
     "loopback-application",
     "loopback"
   ],
-  "main": "index.js",
+  "main": "server/server.js",
   "engines": {
     "node": ">=8.9"
   },
