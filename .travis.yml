@@ -22,4 +22,4 @@ deploy:
   provider: script
   script: docker-compose up -d --remove-orphans
   on:
-    branch: express_init 
+    branch: master 
