@@ -5,11 +5,10 @@ MAINTAINER dronuts_
 WORKDIR /usr/src/app
 
 # Install App Dependencies
-COPY dronuts/package*.json ./
+COPY dronuts/. .
 RUN npm install
 
 # Copy App Source
-COPY dronuts/. .
 #TODO Run any build scripts here
 
 EXPOSE 80
