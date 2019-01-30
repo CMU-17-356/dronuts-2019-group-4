@@ -13,5 +13,4 @@ COPY . .
 #TODO Run any build scripts here
 
 EXPOSE 80
-EXPOSE 3000
 CMD [ "npm", "start" ]
