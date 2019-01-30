@@ -14,7 +14,7 @@ env:
     - DOCKER_MACHINE_NAME="dronuts-2019-group-4"
 
 script:
-  - npm test --prefix dronuts/
+  - npm test
   - docker-compose build
 
 deploy:
@@ -22,7 +22,4 @@ deploy:
   provider: script
   script: docker-compose up -d --remove-orphans
   on:
-    branches:
-		only:
-			master
-			express_init
+    branch: master
