@@ -9,7 +9,7 @@ COPY dronuts/package*.json ./
 RUN npm install
 
 # Copy App Source
-COPY dronuts/ .
+COPY . dronuts/*
 #TODO Run any build scripts here
 
 EXPOSE 80
