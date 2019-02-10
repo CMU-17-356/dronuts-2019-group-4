@@ -5,65 +5,37 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" type="image/x-icon" href="//v4.loopback.io/favicon.ico">
+  <link href="base.css" rel="stylesheet" type="text/css">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" id="bootstrap-css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" >
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<body class="text-center">
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
 
-  <style>
-    h3 {
-      margin-left: 25px;
-      text-align: center;
-    }
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img src="dronut.png" id="icon" alt="User Icon" />
+    </div>
 
-    a, a:visited {
-      color: #3f5dff;
-    }
+    <!-- Login Form -->
+    <form action = "home.html">
+      <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
+      <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
+      <input type="submit" class="fadeIn fourth" value="Log In">
+    </form>
 
-    h3 a {
-      margin-left: 10px;
-    }
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      <a class="underlineHover" href="#">Forgot Password?</a>
+    </div>
 
-    a:hover, a:focus, a:active {
-      color: #001956;
-    }
-
-    .power {
-      position: absolute;
-      bottom: 25px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    .info {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-	  text-align: center;
-    }
-
-    .info h1 {
-      text-align: center;
-      margin-bottom: 0;
-    }
-
-    .info p {
-      text-align: center;
-      margin-bottom: 3em;
-      margin-top: 1em;
-    }
-
-    .info a {
-      text-align: center;
-      margin-bottom: 3em;
-      margin-top: 1em;
-    }
-
-  </style>
-</head>
-<body>
-  <div class="info">
-    <h1>The Dronuts project of Benji, Michael, and Saransh</h1>
-    <p>Version 1.0.0</p>
-	<a href="https://www.youtube.com/watch?v=-50NdPawLVY&feature=youtu.be&t=31">It's working</a>
   </div>
+</div>
 </body>
 
 </html>
