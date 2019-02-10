@@ -1,0 +1,14 @@
+img.donutlogo {
+    height: 100px;
+    width: 100px;
+}
+
+.menu {
+ margin: auto;
+  width: 50%;
+}
+
+body {
+  min-height: 2000px;
+  padding-top: 70px;
+}

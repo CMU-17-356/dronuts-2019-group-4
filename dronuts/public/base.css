@@ -8,9 +8,10 @@ html {
 body {
   font-family: "Poppins", sans-serif;
   height: 100vh;
-  background-image: url("donut.png");
+  background-image: url("images/donut.png");
 
 }
+
 
 a {
   color: #92badd;
