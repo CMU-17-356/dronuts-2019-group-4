@@ -15,11 +15,11 @@ env:
 
 script:
   - npm test --prefix express/ 
-  - docker-compose build
+  - docker-compose --file docker-compose.prod.yml build
 
 deploy:
   skip_cleanup: true
   provider: script
-  script: docker-compose up -d --remove-orphans
+  script: docker-compose --file docker-compose.prod.yml up -d --remove-orphans
   on:
-    branch: master 
+    branch: homepage 
