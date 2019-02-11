@@ -14,7 +14,7 @@ env:
     - DOCKER_MACHINE_NAME="dronuts-2019-group-4"
 
 script:
-  - npm test --prefix dronuts
+  - npm test --prefix express/ 
   - docker-compose build
 
 deploy:

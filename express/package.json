@@ -1,0 +1,17 @@
+{
+  "name": "dronuts",
+  "version": "1.0.0",
+  "description": "Drone based donut delivery service, for class",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "jest": "^24.1.0"
+  }
+}
