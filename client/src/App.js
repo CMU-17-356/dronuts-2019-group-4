@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import logo from './logo.svg';
 import './App.css';
 import Header from "./components/customer/Header";
 import Menu from "./components/customer/Menu";
@@ -14,8 +15,16 @@ class App extends Component {
 			totalItems: 0,
 			totalAmount: 0,
 			quantity: 1,
+               message: "Haven't heard from the express server yet.."
 		}
 	}
+
+     componentDidMount() {
+     fetch('/message')
+          .then(res => res.json())
+          .then(response => this.setState(response));
+     }
+
 		
 	getItems() {
 	    const url =
@@ -108,6 +117,7 @@ class App extends Component {
 
 	render() {
 		return (
+               <div className="App">
 			<div className="container">
 			<Header
 			total={this.state.totalAmount}
@@ -124,6 +134,7 @@ class App extends Component {
 			updateQuantity={this.updateQuantity}
 			/>
 			</div>
+               </div>
 			);
 		}
 	}
