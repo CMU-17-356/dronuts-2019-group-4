@@ -1,10 +1,9 @@
 var express = require('express')
 var path = require('path')
 var app = express()
-var dbRouter = require(path.join(__dirname,'routes/db'))
+var dbRouter= require(path.join(__dirname,'routes/db'))
 
 const port = 80 
-
 
 const CLIENT_BUILD_PATH = path.join(__dirname, '../client/build');
 app.use(express.static(CLIENT_BUILD_PATH))
@@ -22,4 +21,4 @@ app.get('/message', (req, res) => {
 	})
 })
 
-app.listen(port, () => console.log("listening"));
+app.listen(port, () => console.log("listening"))
