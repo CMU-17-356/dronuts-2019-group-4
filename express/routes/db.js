@@ -2,36 +2,35 @@ const express = require("express");
 const dbRouter = express.Router();
 const mongoose = require("mongoose");
 const MongoClient = require('mongodb').MongoClient;
+const promiseRetry = require('promise-retry');
 
-const url = "mongodb://mongodb:27017/";
 // Variable to be sent to Frontend with Database status
 
 var database
 var TIC // test info collection
 var TICname = "testInfo"
 var counter = 0
-var started
+var started = false
 
-function startMongo () {
-
-	MongoClient.connect(url, { 
+const mongoOptions = {
 		useNewUrlParser: true, 
-		reconnectTries: 5, 
+		reconnectTries: 100, 
 		reconnectInterval: 1000,
 		autoReconnect: true
-	}, function(err, db) {
-		console.log("were trying and... ")
-	  if (err) {
-		  console.log("we fucked it up")
-		  console.log(err)
-	  }
-	  else {
-		  console.log("we got it boyz")
-		  database = db.db("mydb")
-		  database.createCollection(TICname)
-		  started = true;
-	  }
-	});
+}
+const url = "mongodb://mongodb:27017/";
+
+const promiseOptions = {
+	retries: mongoOptions.reconnectTries,
+	factor: 2,
+	minTimeout: mongoOptions.reconnectInterval,
+	maxTimeout: 5000
+}
+
+const startMongo = () => {
+	return promiseRetry((retry, number) => {
+		return MongoClient.connect(url, mongoOptions).catch(retry);
+	}, promiseOptions)
 }
 
 dbRouter.get("/add", function(req, res, next) {
@@ -59,6 +58,4 @@ dbRouter.get("/see", function(req, res, next) {
 	})
 });
 
-startMongo()
-
-module.exports = dbRouter
+module.exports = startMongo
