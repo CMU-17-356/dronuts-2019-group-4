@@ -8,3 +8,23 @@ services:
     environment:
       NODE_ENV: production
       PORT: 80 
+    networks:
+       - webappnetwork
+    depends_on:
+        - mongodb
+
+  mongodb:
+    image: mongo
+    restart: always
+    container_name: mongodb
+    volumes:
+        - ./data-node:/data/db
+    ports:
+        - 27017:27017
+    command: mongod --noauth --smallfiles
+    networks:
+        - webappnetwork
+
+networks:
+    webappnetwork:
+        driver: bridge
