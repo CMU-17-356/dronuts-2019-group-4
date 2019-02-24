@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { withRouter } from 'react-router';
 
 class Header extends Component {
   constructor(props) {
@@ -125,4 +124,4 @@ class Header extends Component {
       }
     }
 
-  export default withRouter(Header);
+  export default Header;
