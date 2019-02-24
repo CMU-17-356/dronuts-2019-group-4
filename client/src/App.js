@@ -21,9 +21,9 @@ class App extends Component {
 	}
 
      componentDidMount() {
-//     fetch('/message')
-//          .then(res => res.json())
-//          .then(response => this.setState(response));
+     fetch('/message')
+          .then(res => res.json())
+          .then(response => this.setState(response));
      }
 
 		
