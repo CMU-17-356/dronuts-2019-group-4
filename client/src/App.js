@@ -5,7 +5,6 @@ import Header from "./components/customer/Header";
 import Menu from "./components/customer/Menu";
 import axios from "axios";
 
-var commerce_id = "dronuts_group_4";
 //based on https://github.com/sivadass/react-shopping-cart
 class App extends Component {
 	constructor() {
