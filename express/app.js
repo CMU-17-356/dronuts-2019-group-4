@@ -1,8 +1,8 @@
-var express = require('express')
-var path = require('path')
-var app = express()
-//var database = require(path.join(__dirname,'routes/db'))
-var startMongo = require(path.join(__dirname,'routes/db'))
+const express = require('express')
+const path = require('path')
+const app = express()
+const mongoUtil = require(path.join(__dirname,'mongoUtil'))
+const apiRouter = require(path.join(__dirname,'routes/api'))
 
 const port = 80 
 var TIC // test info collection
@@ -23,7 +23,8 @@ app.get('/message', (req, res) => {
 		message: "If you're seeing this, the Express API is working"
 	})
 })
-// app.use('/db',dbRouter)
+
+app.use('/api',apiRouter)
 
 app.get("/db/add", function(req, res, next) {
 	database.collection(TICname).updateOne({"name":"CounterDoc"}, {$set:{"counter": counter}}, {upsert: true})	
@@ -42,8 +43,8 @@ app.get("/db/see", function(req, res, next) {
 	})
 });
 
-startMongo().then(mongoClient => {
-	database = mongoClient.db("mydb")
+mongoUtil.startMongo().then(() => {
+	database = mongoUtil.getDatabase()
 	app.listen(port, () => console.log("listening"))
 })
 
