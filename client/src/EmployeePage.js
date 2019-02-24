@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Header from "./components/employee/Header";
-import OrderList from "./components/employee/OrderList";
+import Order from "./components/employee/Order";
 import axios from "axios";
 
 //based on https://github.com/sivadass/react-shopping-cart
@@ -30,6 +30,7 @@ class EmployeePage extends Component {
                             "quantity": "1"
                           }],
                      "time": "11:30",
+                     "id":0,
 
                     },
                     {
@@ -46,7 +47,7 @@ class EmployeePage extends Component {
                             "quantity": "1"
                           }],
                      "time": "11:35",
-
+                       "id":1,
                     },
                     {
                     "items": [{
@@ -68,7 +69,7 @@ class EmployeePage extends Component {
                             "quantity": "3"
                           }],
                      "time": "11:38",
-
+                     "id":2,
                     }],
                message: "Haven't heard from the express server yet.."
 		}
@@ -92,15 +93,37 @@ class EmployeePage extends Component {
 	}
 
      // Add to Cart
+    deleteItem(id) {
+    console.log(id);
+   this.setState(prevState => ({
+        orders: prevState.orders.filter(el => el.id != id )
+    }));
+
+  }
 
 	render() {
+	    console.log(this.state.orders);
+	    const items = this.state.orders
+	    .map(item => {
+        return (
+          <Order
+            key={item.id}
+            itemsList={item.items}
+            time={item.time}
+            id={item.id}
+            deleteButton={this.deleteItem.bind(
+              this,
+              item.id,
+            )}
+          />
+        );
+      });
+
 		return (
                <div className="Employee">
 			<div className="container">
 			<Header/>
-			<OrderList
-			itemsList={this.state.orders}
-			/>
+			<div className="OrderList">{items}</div>
 			</div>
                </div>
 			);

@@ -6,7 +6,6 @@ class Order extends Component {
       .map(item => {
         return (
           <Item
-            key={item.id}
             name={item.name}
             image={item.image}
             id={item.id}
@@ -19,11 +18,14 @@ class Order extends Component {
             {items}
 
             <p className="time-placed">{this.props.time}</p>
-            <button
+             <button
             className="mark-done"
-                type="button">
+            type="button"
+                onClick={this.props.deleteButton}
+             >
                 Done
             </button>
+
             </div>;
   }
 }
