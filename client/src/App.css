@@ -29,6 +29,16 @@ header{
   justify-content: center;
 }
 
+.order {
+    overflow: hidden;
+    white-space: nowrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, max-content));
+    justify-content: center;
+    grid-gap: 1rem;
+}
+
+
 
 .cart-items{
   font-size: 15px;
