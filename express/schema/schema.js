@@ -39,8 +39,7 @@ const orderSchema = Joi.object({
 })
 
 module.exports = {
-	drone: droneSchema,
-	user: userSchema,
-	order: orderSchema,
-	Joi: Joi
+	droneSchema,
+	userSchema,
+	orderSchema
 }
