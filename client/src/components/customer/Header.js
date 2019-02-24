@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import axios from "axios";
+import { withRouter } from 'react-router';
 
 class Header extends Component {
   constructor(props) {
@@ -14,6 +16,22 @@ class Header extends Component {
     this.setState({
       showCart: !this.state.showCart
     });
+  }
+
+  handleCheckout(){
+        axios.post('http://credit.17-356.isri.cmu.edu/api/transactions', {
+        "companyId": "dronuts_group_4",
+        "amount": this.props.total,
+      })
+      .then(function (response) {
+        console.log(response);
+        console.log(response.data.id)
+        window.location = 'http://credit.17-356.isri.cmu.edu?transaction_id=' + response.data.id;
+
+      }).catch(function (error) {
+        console.log(error);
+        });
+
   }
 
   handleSubmit = (e) => {
@@ -94,8 +112,10 @@ class Header extends Component {
         {this.state.cart.length > 0 ? (
           <button
           type="button"
-          className="checkout">
+          className="checkout"
+          onClick={this.handleCheckout.bind(this)}>
           CHECKOUT
+
           </button> ) : "" }
         </div>
         </div>
@@ -105,4 +125,4 @@ class Header extends Component {
       }
     }
 
-  export default Header;
+  export default withRouter(Header);
