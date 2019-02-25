@@ -29,7 +29,7 @@ const loadDatabase = () => {
 
 const unloadedDatabaseResponse = {
 	success: false,
-	reason: "Request does not match our JOI validation"
+	reason: "Database is not loaded yet, try again soon"
 }
 
 const invalidFormatResponse = {
@@ -37,16 +37,21 @@ const invalidFormatResponse = {
 	reason: "Request does not match our JOI validation"
 }
 
-const databaseError = (err) = {
-	success: false,
-	reason: "Database error",
-	err: err
+const databaseError = function (err) {
+	return {
+		success: false,
+		reason: "Database error",
+		error: err
+	}
 }
 
-const successResponse = (data) => {
-	success: true,
-	data: data
+const successResponse = function (payload) {
+	return {
+		success: false,
+		data:payload
+	}
 }
+
 
 apiRouter.post("/addOrder", function(req, res, next) {
 	loadDatabase()
@@ -61,7 +66,7 @@ apiRouter.post("/addOrder", function(req, res, next) {
 				res.json(successResponse({orderID: orderID}))
 				orderID += 1
 			}
-		}
+		})
 	} else {
 		res.json(unloadedDatabaseResponse)
 	}
@@ -79,7 +84,7 @@ apiRouter.post("/updateOrder", function(req, res, next) {
 				database.collection(mongoUtil.ORDER_COLLECTION_NAME).findOneAndReplace({"orderID": value.orderID}, value)
 				res.json(successResponse("Updated order"))
 			}
-		}
+		})
 	} else {
 		res.json(unloadedDatabaseResponse)
 	}
@@ -115,7 +120,7 @@ apiRouter.post("/addUser", function(req, res, next) {
 				database.collection(mongoUtil.USERS_COLLECTION_NAME).updateOne(value)
 				res.json(successResponse("Added user successfully"))
 			}
-		}
+		})
 	} else {
 		res.json(unloadedDatabaseResponse)
 	}
@@ -143,7 +148,7 @@ apiRouter.post("/getUserInfo", function(req, res, next) {
 					userOrders = result
 				}
 			})
-		res.json(successResponse({info: userInfo, orders: userOrders})
+		res.json(successResponse({info: userInfo, orders: userOrders}))
 
 	} else {
 		res.json(unloadedDatabaseResponse)
@@ -161,7 +166,7 @@ apiRouter.post("/addDrone", function(req, res, next) {
 				database.collection(mongoUtil.DRONE_COLLECTION_NAME).updateOne(value)
 				res.json(successResponse("Added drone successfully"))
 			}
-		}
+		})
 	} else {
 		res.json(unloadedDatabaseResponse)
 	}
@@ -178,7 +183,7 @@ apiRouter.post("/updateDrone", function(req, res, next) {
 				database.collection(mongoUtil.DRONE_COLLECTION_NAME).findOneAndReplace({"id": value.id}, value)
 				res.json(successResponse("Updated drone successfully"))
 			}
-		}
+		})
 	} else {
 		res.json(unloadedDatabaseResponse)
 	}

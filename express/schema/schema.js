@@ -24,7 +24,7 @@ const droneSchema = Joi.object({
 })
 
 const orderSchema = Joi.object({
-	orderID: Joi.object.string(),
+	orderID: Joi.string(),
 	address: Joi.object({
 			number: Joi.number().integer().positive().required(),
 			streetname: Joi.string().required(),
