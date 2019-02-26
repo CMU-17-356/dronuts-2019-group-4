@@ -4,10 +4,13 @@ const MongoClient = require('mongodb').MongoClient;
 const promiseRetry = require('promise-retry');
 
 // Variable to be sent to Frontend with Database status
+const DATABASE_NAME = "dronuts"
+const ORDER_COLLECTION_NAME = "orders"
+const DRONE_COLLECTION_NAME = "drones"
+const USERS_COLLECTION_NAME = "users"
 
 var database
 var TIC // test info collection
-var TICname = "testInfo"
 var counter = 0
 var started = false
 
@@ -30,7 +33,7 @@ const startMongo = () => {
 	return promiseRetry((retry, number) => {
 		return MongoClient.connect(url, mongoOptions).catch(retry);
 	}, promiseOptions).then(mongoClient => {
-		database = mongoClient.db("mydb")
+		database = mongoClient.db(DATABASE_NAME)
 		started = true;
 	})
 }
@@ -39,31 +42,5 @@ const getDatabase = () => {
 	return database
 }
 
-/*
-dbRouter.get("/add", function(req, res, next) {
-	if(!started) {
-		startMongo();
-		res.send("not started")
-	} 
-	database.collection(TICname).updateOne({"name":"CounterDoc"}, {$set:{"counter": counter}}, {upsert: true})	
-	counter += 1
-	res.send("added one")
-});
 
-dbRouter.get("/see", function(req, res, next) {
-	if(!started) {
-		startMongo()
-		res.send("not started")
-	}
-	database.collection(TICname).findOne({"name":"CounterDoc"}, function(err, result) {
-		if(err){
-			res.send("Sorry we fucked see up")
-		}
-		else{
-			res.json(result)
-		}
-	})
-});
-*/
-
-module.exports = { startMongo, getDatabase }
+module.exports = { startMongo, getDatabase, DATABASE_NAME, ORDER_COLLECTION_NAME }
