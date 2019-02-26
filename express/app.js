@@ -6,7 +6,7 @@ const app = express()
 const mongoUtil = require(path.join(__dirname,'mongoUtil'))
 const apiRouter = require(path.join(__dirname,'routes/api'))
 
-const port = 80 
+const port = 80
 var TIC // test info collection
 const TICname = "testInfo"
 var counter = 0

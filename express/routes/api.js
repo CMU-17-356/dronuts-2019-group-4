@@ -90,6 +90,22 @@ apiRouter.post("/updateOrder", function(req, res, next) {
 	}
 })
 
+apiRouter.post("/allItems", function(req, res, next) {
+	loadDatabase()
+	if(dbLoaded) {
+		database.collection(mongoUtil.ITEM_COLLECTION_NAME).find(
+			function(err, result) {
+				if(err){
+					res.send(databaseError(err))
+				}
+				else{
+					res.json(result)
+				}
+			})
+	} else {
+		res.json(unloadedDatabaseResponse)
+	}
+})
 
 apiRouter.post("/allOrders", function(req, res, next) {
 	loadDatabase()
