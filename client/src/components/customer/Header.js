@@ -20,7 +20,7 @@ class Header extends Component {
   handleCheckout(){
         //TODO also post order to backend
         axios.post('api/addOrder', {
-        items: this.props.cartItems
+        items: this.props.cartItems,
         "time": "11:30"
         });
         axios.post('http://credit.17-356.isri.cmu.edu/api/transactions', {
