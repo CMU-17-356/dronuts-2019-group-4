@@ -28,8 +28,8 @@ class App extends Component {
 		
 	getItems() {
 	    //TODO change to backend by changing url
-	    const url =
-	      "api/allItems";
+	    const url = "https://res.cloudinary.com/sivadass/raw/upload/v1535817394/json/products.json";
+	      //"api/allItems";
 	    axios.get(url).then(response => {
 	      this.setState({
 	        items: response.data

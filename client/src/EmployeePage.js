@@ -22,7 +22,7 @@ class EmployeePage extends Component {
 	    //TODO change url to proper url
 	    const url =
 	      "api/allOrders"; //GET actual from express backend
-	    axios.get(url).then(response => {
+	    axios.post(url).then(response => {
 	      this.setState({
 	        orders: response.data
 	      });
