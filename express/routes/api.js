@@ -3,17 +3,23 @@ const express = require("express")
 const path = require('path')
 
 const mongoUtil = require(path.join(__dirname,'../mongoUtil'))
+const ORDER_COLLECTION_NAME = mongoUtil.ORDER_COLLECTION_NAME
+const DRONE_COLLECTION_NAME = mongoUtil.DRONE_COLLECTION_NAME
+const USERS_COLLECTION_NAME = mongoUtil.USERS_COLLECTION_NAME
+
 
 const schema = require(path.join(__dirname,'../schema/schema'))
-const droneSchema = schema.drone
-const userSchema = schema.user
-const orderSchema = schema.order
+const testSchema = schema.drone
+const testSchema = schema.user
+const testSchema = schema.order
 
 const apiRouter = express.Router()
 
 const BaseJoi = require('joi')
 const Extension = require('joi-date-extensions')
 const Joi = BaseJoi.extend(Extension);
+
+const testSchema = Joi.any();
 
 var database = mongoUtil.getDatabase()
 var dbLoaded = false
@@ -32,12 +38,7 @@ const unloadedDatabaseResponse = {
 	reason: "Database is not loaded yet, try again soon"
 }
 
-const invalidFormatResponse = {
-	success: false,
-	reason: "Request does not match our JOI validation"
-}
-
-const databaseError = function (err) {
+const invalidFormatResponse = (err) => {
 	return {
 		success: false,
 		reason: "Database error",
@@ -45,25 +46,32 @@ const databaseError = function (err) {
 	}
 }
 
-const successResponse = function (payload) {
+const databaseError = (err) => {
 	return {
 		success: false,
+		reason: "Database error",
+		error: err
+	}
+}
+
+const successResponse = (payload) => {
+	return {
+		success: true,
 		data:payload
 	}
 }
 
-
 apiRouter.post("/addOrder", function(req, res, next) {
 	loadDatabase()
 	if(dbLoaded) {
-		var reqJSON = JSON.parse(req)
-		Joi.validate(reqJSON, orderSchema, (err, value) => {
+		Joi.validate(req.body, testSchema, (err, value) => {
 			if(err) {
-				res.json(invalidFormatResponse)
+				console.log("Add Order wasn't correctly formatted")
+				res.json(invalidFormatResponse(err))
 			} else {
-				value.orderID = orderID
-				database.collection(mongoUtil.ORDER_COLLECTION_NAME).updateOne(value)
-				res.json(successResponse({orderID: orderID}))
+				const newValue = Object.assign({"orderID": orderID}, value)
+				database.collection(ORDER_COLLECTION_NAME).insertOne(newValue)
+				res.json(successResponse(newValue))
 				orderID += 1
 			}
 		})
@@ -72,16 +80,16 @@ apiRouter.post("/addOrder", function(req, res, next) {
 	}
 })
 
-
 apiRouter.post("/updateOrder", function(req, res, next) {
 	loadDatabase()
 	if(dbLoaded) {
 		var reqJSON = JSON.parse(req)
-		Joi.validate(reqJSON, orderSchema, (err, value) => {
+		Joi.validate(reqJSON, testSchema, (err, value) => {
 			if(err) {
-				res.json(invalidFormatResponse)
+				console.log("Update Order wasn't correctly formatted")
+				res.json(invalidFormatResponse(err))
 			} else {
-				database.collection(mongoUtil.ORDER_COLLECTION_NAME).findOneAndReplace({"orderID": value.orderID}, value)
+				database.collection(ORDER_COLLECTION_NAME).findOneAndReplace({"orderID": value.orderID}, value)
 				res.json(successResponse("Updated order"))
 			}
 		})
@@ -90,11 +98,27 @@ apiRouter.post("/updateOrder", function(req, res, next) {
 	}
 })
 
+apiRouter.post("/allItems", function(req, res, next) {
+	loadDatabase()
+	if(dbLoaded) {
+		database.collection(ITEM_COLLECTION_NAME).find({}).toArray(
+			function(err, result) {
+				if(err){
+					res.send(databaseError(err))
+				}
+				else{
+					res.json(result)
+				}
+			})
+	} else {
+		res.json(unloadedDatabaseResponse)
+	}
+})
 
 apiRouter.post("/allOrders", function(req, res, next) {
 	loadDatabase()
 	if(dbLoaded) {
-		database.collection(mongoUtil.ORDER_COLLECTION_NAME).find(
+		database.collection(mongoUtil.ORDER_COLLECTION_NAME).find({}).toArray(
 			function(err, result) {
 				if(err){
 					res.send(databaseError(err))
@@ -113,11 +137,12 @@ apiRouter.post("/addUser", function(req, res, next) {
 	loadDatabase()
 	if(dbLoaded) {
 		var reqJSON = JSON.parse(req)
-		Joi.validate(reqJSON, userSchema, (err, value) => {
+		Joi.validate(reqJSON, testSchema, (err, value) => {
 			if(err) {
-				res.json(invalidFormatResponse)
+				console.log("Add User wasn't correctly formatted")
+				res.json(invalidFormatResponse(err))
 			} else {
-				database.collection(mongoUtil.USERS_COLLECTION_NAME).updateOne(value)
+				database.collection(mongoUtil.USERS_COLLECTION_NAME).insertOne(value)
 				res.json(successResponse("Added user successfully"))
 			}
 		})
@@ -159,11 +184,12 @@ apiRouter.post("/addDrone", function(req, res, next) {
 	loadDatabase()
 	if(dbLoaded) {
 		var reqJSON = JSON.parse(req)
-		Joi.validate(reqJSON, droneSchema, (err, value) => {
+		Joi.validate(reqJSON, testSchema, (err, value) => {
 			if(err) {
-				res.json(invalidFormatResponse)
+				console.log("Add Drone wasn't correctly formatted")
+				res.json(invalidFormatResponse(err))
 			} else {
-				database.collection(mongoUtil.DRONE_COLLECTION_NAME).updateOne(value)
+				database.collection(DRONE_COLLECTION_NAME).insertOne(value)
 				res.json(successResponse("Added drone successfully"))
 			}
 		})
@@ -176,9 +202,10 @@ apiRouter.post("/updateDrone", function(req, res, next) {
 	loadDatabase()
 	if(dbLoaded) {
 		var reqJSON = JSON.parse(req)
-		Joi.validate(reqJSON, droneSchema, (err, value) => {
+		Joi.validate(reqJSON, testSchema, (err, value) => {
 			if(err) {
-				res.json(invalidFormatResponse)
+				console.log("Update Drone wasn't correctly formatted")
+				res.json(invalidFormatResponse(err))
 			} else {
 				database.collection(mongoUtil.DRONE_COLLECTION_NAME).findOneAndReplace({"id": value.id}, value)
 				res.json(successResponse("Updated drone successfully"))
@@ -192,7 +219,7 @@ apiRouter.post("/updateDrone", function(req, res, next) {
 apiRouter.post("/allDrones", function(req, res, next) {
 	loadDatabase()
 	if(dbLoaded) {
-		database.collection(mongoUtil.DRONE_COLLECTION_NAME).find(
+		database.collection(mongoUtil.DRONE_COLLECTION_NAME).find({}).toArray(
 			function(err, result) {
 				if(err){
 					res.send(databaseError(err))

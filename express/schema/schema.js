@@ -17,6 +17,13 @@ const userSchema = Joi.object({
 		})),
 })
 
+const itemSchema = Joi.object({
+    id: Joi.string().required(),
+    name: Joi.string().required(),
+    price:  Joi.number().integer().required(),
+    image: Joi.string().required(),
+})
+
 const droneSchema = Joi.object({
 	id: Joi.string().required(),
 	dateAdded: Joi.date().format('MM-DD-YYYY').required(),
@@ -24,24 +31,32 @@ const droneSchema = Joi.object({
 })
 
 const orderSchema = Joi.object({
-	orderID: Joi.string(),
+    id: Joi.string(),
 	address: Joi.object({
 			number: Joi.number().integer().positive().required(),
 			streetname: Joi.string().required(),
 			city: Joi.string().required(),
 			state: Joi.string().required(),
 			zipcode: Joi.string().regex(/^\d{5}(?:[-\s]\d{4})?$/).required()
-		}).required(),
-	donuts: Joi.array().items(Joi.string()).required(),
+		}),
+	items: Joi.array().items(Joi.object({
+        id: Joi.number().integer().required(),
+        name: Joi.string().required(),
+        price:  Joi.number().integer().required(),
+        image: Joi.string().required()}
+	)).required(),
+
     price_dollars: Joi.number().integer().positive(),
     price_cents: Joi.number().integer().min(0).max(99),
 	user: Joi.string(), // username of the user ordering
-	timeOrdered: Joi.number().positive().integer().required().strict() // time in milliseconds
+	time:Joi.string(),
+	timeOrdered: Joi.number().positive().integer().strict() // time in milliseconds
 })
 
 module.exports = {
 	drone: droneSchema,
 	user: userSchema,
 	order: orderSchema,
+	item: itemSchema,
 	Joi: Joi
 }
