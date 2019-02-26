@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 
 class Header extends Component {
   constructor(props) {
@@ -15,27 +14,6 @@ class Header extends Component {
     this.setState({
       showCart: !this.state.showCart
     });
-  }
-
-  handleCheckout(){
-        //TODO also post order to backend
-        axios.post('api/addOrder', {
-        items: this.props.cartItems,
-        "time": "11:30"
-        });
-        axios.post('http://credit.17-356.isri.cmu.edu/api/transactions', {
-        "companyId": "dronuts_group_4",
-        "amount": this.props.total,
-      })
-      .then(function (response) {
-        console.log(response);
-        console.log(response.data.id)
-        window.location = 'http://credit.17-356.isri.cmu.edu?transaction_id=' + response.data.id;
-
-      }).catch(function (error) {
-        console.log(error);
-        });
-
   }
 
   handleSubmit = (e) => {
@@ -116,10 +94,8 @@ class Header extends Component {
         {this.state.cart.length > 0 ? (
           <button
           type="button"
-          className="checkout"
-          onClick={this.handleCheckout.bind(this)}>
+          className="checkout">
           CHECKOUT
-
           </button> ) : "" }
         </div>
         </div>
