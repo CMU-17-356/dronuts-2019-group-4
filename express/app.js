@@ -6,7 +6,7 @@ const app = express()
 const mongoUtil = require(path.join(__dirname,'mongoUtil'))
 const apiRouter = require(path.join(__dirname,'routes/api'))
 
-const port = 80 
+const port = 80
 var TIC // test info collection
 const TICname = "testInfo"
 var counter = 0
@@ -14,8 +14,9 @@ var database
 
 const CLIENT_BUILD_PATH = path.join(__dirname, '../client/build');
 app.use(express.static(CLIENT_BUILD_PATH))
+app.use(express.json())
 
-app.get('/', function(request, response) {
+app.get('*', function(request, response) {
   response.sendFile(path.join(CLIENT_BUILD_PATH, 'index.html'));
 });
 

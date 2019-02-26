@@ -42,5 +42,11 @@ const getDatabase = () => {
 	return database
 }
 
-
-module.exports = { startMongo, getDatabase, DATABASE_NAME, ORDER_COLLECTION_NAME }
+module.exports = { 
+	startMongo, 
+	getDatabase,
+	DATABASE_NAME, 
+	ORDER_COLLECTION_NAME, 
+	DRONE_COLLECTION_NAME, 
+	USERS_COLLECTION_NAME
+}
