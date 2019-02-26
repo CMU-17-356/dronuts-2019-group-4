@@ -20,16 +20,15 @@ class App extends Component {
 	}
 
      componentDidMount() {
-     axios.get("/message").then(response => {
-	      console.log(response);
-	    });
+     fetch('/message')
+          .then(res => res.json())
+          .then(response => this.setState(response));
      }
 
 		
 	getItems() {
-	    //TODO change to backend by changing url
-	    const url = "https://res.cloudinary.com/sivadass/raw/upload/v1535817394/json/products.json";
-	      //"api/allItems";
+	    const url =
+	      "https://res.cloudinary.com/sivadass/raw/upload/v1535817394/json/products.json";
 	    axios.get(url).then(response => {
 	      this.setState({
 	        items: response.data

@@ -29,35 +29,6 @@ header{
   justify-content: center;
 }
 
-.order {
-    overflow: hidden;
-    white-space: nowrap;
-    display: grid;
-    justify-items: center;
-    grid-template-columns: repeat(auto-fit, minmax(100px, max-content));
-    justify-content: center;
-    grid-gap: 1rem;
-}
-
-.time-placed{
-font-size: 20px;
-font-weight: bold;
-}
-
-.mark-done{
-font-size: 20px;
-font-weight: bold;
-}
-
-.item-quantity{
-font-size: 20px;
-font-weight: bold;
-}
-
-
-
-
-
 
 .cart-items{
   font-size: 15px;
