@@ -22,6 +22,8 @@ const itemSchema = Joi.object({
     name: Joi.string().required(),
     price:  Joi.number().integer().required(),
     image: Joi.string().required(),
+
+
 })
 
 const droneSchema = Joi.object({
@@ -43,8 +45,8 @@ const orderSchema = Joi.object({
         id: Joi.number().integer().required(),
         name: Joi.string().required(),
         price:  Joi.number().integer().required(),
-        image: Joi.string().required()}
-	)).required(),
+        quantity:  Joi.number().integer().required(),
+        image: Joi.string().required()})).required(),
 
     price_dollars: Joi.number().integer().positive(),
     price_cents: Joi.number().integer().min(0).max(99),
@@ -57,6 +59,5 @@ module.exports = {
 	drone: droneSchema,
 	user: userSchema,
 	order: orderSchema,
-	item: itemSchema,
 	Joi: Joi
 }
