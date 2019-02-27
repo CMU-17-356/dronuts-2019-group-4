@@ -37,7 +37,7 @@ class EmployeePage extends Component {
     deleteItem(id) {
     console.log(id);
    this.setState(prevState => ({
-        orders: prevState.orders.filter(el => el.id != id )
+        orders: prevState.orders.filter(el => el.orderID != id )
     }));
 
   }
@@ -48,13 +48,13 @@ class EmployeePage extends Component {
 	    .map(item => {
         return (
           <Order
-            key={item.id}
+            key={item.orderID}
             itemsList={item.items}
             time={item.time}
-            id={item.id}
+            id={item.orderID}
             deleteButton={this.deleteItem.bind(
               this,
-              item.id,
+              item.orderID,
             )}
           />
         );
