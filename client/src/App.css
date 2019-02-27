@@ -3,6 +3,10 @@ body{
 }
 
 header{
+  font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 700;
   background-color: grey;
   min-height: 50vh;
   display: flex;
@@ -23,28 +27,52 @@ header{
   width: auto;
 }
 .menu{
+  font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+    font-size: 16px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 700;
+  background-color: pink;
   display: grid;
   grid-template-columns: 200px 200px 200px 200px;
   grid-gap: 30px;
   justify-content: center;
 }
 
+.Employee {
+    background-color: pink;
+}
 .order {
-    overflow: hidden;
-    white-space: nowrap;
+    margin-right: 30vw;
+    font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+    font-size: 20px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 700;
     display: grid;
     justify-items: center;
     grid-template-columns: repeat(auto-fit, minmax(100px, max-content));
-    justify-content: center;
+    justify-content: end;
     grid-gap: 1rem;
 }
 
 .time-placed{
+font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 700;
 font-size: 20px;
 font-weight: bold;
 }
 
 .mark-done{
+border-radius: 12px;
+height:100px;
+width:200px;
+font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 700;
 font-size: 20px;
 font-weight: bold;
 }
