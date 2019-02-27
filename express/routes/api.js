@@ -9,9 +9,9 @@ const USERS_COLLECTION_NAME = mongoUtil.USERS_COLLECTION_NAME
 
 
 const schema = require(path.join(__dirname,'../schema/schema'))
-const testSchema = schema.drone
-const testSchema = schema.user
-const testSchema = schema.order
+const droneSchema = schema.drone
+const userSchema = schema.user
+const orderSchema = schema.order
 
 const apiRouter = express.Router()
 
