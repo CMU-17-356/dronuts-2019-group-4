@@ -61,6 +61,7 @@ const successResponse = (payload) => {
 	}
 }
 
+// takes in an order, generates an orderID and sends back the orderID which is generated here
 apiRouter.post("/addOrder", function(req, res, next) {
 	loadDatabase()
 	if(dbLoaded) {
@@ -69,7 +70,7 @@ apiRouter.post("/addOrder", function(req, res, next) {
 				console.log("Add Order wasn't correctly formatted")
 				res.json(invalidFormatResponse(err))
 			} else {
-				const newValue = Object.assign({"orderID": orderID, "copleted": false}, value)
+				const newValue = Object.assign({"orderID": orderID, "completed": false}, value)
 				database.collection(ORDER_COLLECTION_NAME).insertOne(newValue)
 				res.json(successResponse(newValue))
 				orderID += 1
@@ -80,6 +81,7 @@ apiRouter.post("/addOrder", function(req, res, next) {
 	}
 })
 
+// takes in a string (order Id), and marks it as completed in the database
 apiRouter.post("/markOrderDone", function(req, res, next) {
 	loadDatabase()
 	if(dbLoaded) {
@@ -97,6 +99,8 @@ apiRouter.post("/markOrderDone", function(req, res, next) {
 	}
 })
 
+// takes in order and replaces the current order with that ID,
+// no upsert
 apiRouter.post("/updateOrder", function(req, res, next) {
 	loadDatabase()
 	if(dbLoaded) {
@@ -114,6 +118,7 @@ apiRouter.post("/updateOrder", function(req, res, next) {
 	}
 })
 
+// returns a list of all available products that we deliver
 apiRouter.post("/allItems", function(req, res, next) {
 	loadDatabase()
 	if(dbLoaded) {
@@ -166,11 +171,13 @@ apiRouter.post("/addUser", function(req, res, next) {
 	}
 })
 
+// takes in a users username as a string and returns all of a users data
 apiRouter.post("/getUserInfo", function(req, res, next) {
 	loadDatabase()
 	if(dbLoaded) {
 		var userInfo
-		var userOrders
+		var userOrdersOpen
+		var userOrdersDone
 		database.collection(mongoUtil.USERS_COLLECTION_NAME).findOne({"username": req.body.username},
 			function(err, result) {
 				if(err){
@@ -179,21 +186,34 @@ apiRouter.post("/getUserInfo", function(req, res, next) {
 					userInfo = result
 				}
 			})
-		database.collection(mongoUtil.ORDER_COLLECTION_NAME).findAll({"user": req.body.username},
+		database.collection(mongoUtil.ORDER_COLLECTION_NAME).findAll({"user": req.body.username, "completed": false},
 			function(err, result) {
 				if(err){
 					res.send(databaseError(err))
 				} else {
-					userOrders = result
+					userOrdersOpen = result
 				}
 			})
-		res.json(successResponse({info: userInfo, orders: userOrders}))
-
+		database.collection(mongoUtil.ORDER_COLLECTION_NAME).findAll({"user": req.body.username, "completed": true},
+			function(err, result) {
+				if(err){
+					res.send(databaseError(err))
+				} else {
+					userOrdersDone = result
+				}
+			})
+		res.json(successResponse({
+			info: userInfo,
+			openOrders: userOrdersOpen,
+			doneOrders: userOrdersDone
+		}))
 	} else {
 		res.json(unloadedDatabaseResponse)
 	}
 })
 
+// takes in a drone and adds it to the database
+// only returns success or failure
 apiRouter.post("/addDrone", function(req, res, next) {
 	loadDatabase()
 	if(dbLoaded) {
@@ -211,6 +231,7 @@ apiRouter.post("/addDrone", function(req, res, next) {
 	}
 })
 
+// update drone and replaces it based on id value
 apiRouter.post("/updateDrone", function(req, res, next) {
 	loadDatabase()
 	if(dbLoaded) {
@@ -228,6 +249,7 @@ apiRouter.post("/updateDrone", function(req, res, next) {
 	}
 })
 
+// returns all drone information
 apiRouter.post("/allDrones", function(req, res, next) {
 	loadDatabase()
 	if(dbLoaded) {
