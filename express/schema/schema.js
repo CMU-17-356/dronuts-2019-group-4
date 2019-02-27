@@ -33,7 +33,7 @@ const droneSchema = Joi.object({
 })
 
 const orderSchema = Joi.object({
-    id: Joi.string(),
+  id: Joi.string(),
 	address: Joi.object({
 			number: Joi.number().integer().positive().required(),
 			streetname: Joi.string().required(),
@@ -52,7 +52,8 @@ const orderSchema = Joi.object({
     price_cents: Joi.number().integer().min(0).max(99),
 	user: Joi.string(), // username of the user ordering
 	time:Joi.string(),
-	timeOrdered: Joi.number().positive().integer().strict() // time in milliseconds
+	timeOrdered: Joi.number().positive().integer().strict(), // time in milliseconds
+	completed: Joi.boolean().required()
 })
 
 module.exports = {
