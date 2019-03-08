@@ -11,7 +11,7 @@ class EmployeePage extends Component {
 		super();
 		this.state = {
 			orders: [],
-               message: "Haven't heard from the express server yet.."
+            message: "Haven't heard from the express server yet.."
 		}
 	}
 
@@ -19,7 +19,6 @@ class EmployeePage extends Component {
 
 
 	getOrders() {
-	    //TODO change url to proper url
 	    const url =
 	      "api/allOrders"; //GET actual from express backend
 	    axios.post(url).then(response => {
