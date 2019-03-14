@@ -55,27 +55,32 @@ class Header extends Component {
         response => {
             const { lat, lng } = response.results[0].geometry.location;
             console.log(lat, lng);
+            axios.post('api/addOrder', {
+            items: this.props.cartItems,
+            "time": "11:30",
+            "latitude": lat,
+            "longitude": lng
+            });
+            axios.post('http://credit.17-356.isri.cmu.edu/api/transactions', {
+            "companyId": "dronuts_group_4",
+            "amount": this.props.total,
+            })
+            .then(function (response) {
+            console.log(response);
+            console.log(response.data.id)
+            //window.location = 'http'://credit.17-356.isri.cmu.edu?transaction_id=' + response.data.id;
+             var win = window.open('http://credit.17-356.isri.cmu.edu?transaction_id=' + response.data.id, '_blank');
+             win.focus();
+            }).catch(function (error) {
+                console.log(error);
+            });
             },
         error => {
+            alert("Invalid Address")
             console.log(error);
         }
         );
-//        axios.post('api/addOrder', {
-//        items: this.props.cartItems,
-//        "time": "11:30"
-//        });
-//        axios.post('http://credit.17-356.isri.cmu.edu/api/transactions', {
-//        "companyId": "dronuts_group_4",
-//        "amount": this.props.total,
-//      })
-//      .then(function (response) {
-//        console.log(response);
-//        console.log(response.data.id)
-//        window.location = 'http://credit.17-356.isri.cmu.edu?transaction_id=' + response.data.id;
-//
-//      }).catch(function (error) {
-//        console.log(error);
-//        });
+
 
   }
 

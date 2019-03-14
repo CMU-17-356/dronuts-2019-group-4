@@ -11,7 +11,8 @@ class EmployeePage extends Component {
 		super();
 		this.state = {
 			orders: [],
-            message: "Haven't heard from the express server yet.."
+            message: "Haven't heard from the express server yet..",
+            drones: []
 		}
 	}
 
@@ -26,10 +27,23 @@ class EmployeePage extends Component {
 	        orders: response.data
 	      });
 	    });
+
+    }
+
+    getDrones() {
+        const url =
+	      'http://drones.17-356.isri.cmu.edu/api/airbases/dronuts_group_4';
+	    axios.get(url).then(response => {
+	      this.setState({
+	        drones: response.data.drones
+	      });
+	      console.log(this.state.drones);
+	    });
     }
 
 	componentWillMount() {
 		this.getOrders();
+		this.getDrones();
 	}
 
      // Add to Cart
