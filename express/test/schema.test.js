@@ -16,6 +16,8 @@ describe('Test Order Schema', () => {
     price_cents: 45,
 	user: "sdsdsdsf",
 	time:"11:30",
+	latitude: 40.442169,
+    longitude: -79.994957,
 	timeOrdered: 234423124}, schema.order);
     expect(result.error).toBe(null);
   });
@@ -39,6 +41,8 @@ describe('Test Order Schema', () => {
         quantity: 1}],
     price_dollars: 23,
     price_cents: 45,
+    latitude: 40.442169,
+    longitude: -79.994957,
 	timeOrdered: 234423124}, schema.order);
     expect(result.error).toBe(null);
   });
@@ -55,6 +59,8 @@ describe('Test Order Schema', () => {
     price_dollars: 23,
     price_cents: 45,
 	user: "sdsdsdsf",
+	latitude: 40.442169,
+    longitude: -79.994957,
 	timeOrdered: 234423124}, schema.order);
     expect(result.error).toBe(null);
   });
@@ -70,6 +76,8 @@ describe('Test Order Schema', () => {
     price_dollars: 23,
     price_cents: 45,
 	user: "sdsdsdsf",
+	latitude: 40.442169,
+    longitude: -79.994957,
 	timeOrdered: 234423124}, schema.order);
     expect(result.error).toBe(null);
   });
@@ -85,6 +93,8 @@ describe('Test Order Schema', () => {
     price_dollars: 23,
     price_cents: 105,
 	user: "sdsdsdsf",
+	latitude: 40.442169,
+    longitude: -79.994957,
 	timeOrdered: 234423124}, schema.order);
     expect(result.error).not.toBe(null);
   });
@@ -100,6 +110,8 @@ describe('Test Order Schema', () => {
     price_dollars: -23,
     price_cents: 105,
 	user: "sdsdsdsf",
+	latitude: 40.442169,
+    longitude: -79.994957,
 	timeOrdered: 234423124}, schema.order);
     expect(result.error).not.toBe(null);
   });
