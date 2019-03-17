@@ -49,6 +49,7 @@ const orderSchema = Joi.object({
         image: Joi.string().required()})).required(),
     latitude: Joi.number().required(),
     longitude: Joi.number().required(),
+    orderStatus: Joi.string().required(),
     price_dollars: Joi.number().integer().positive(),
     price_cents: Joi.number().integer().min(0).max(99),
 	user: Joi.string(), // username of the user ordering
