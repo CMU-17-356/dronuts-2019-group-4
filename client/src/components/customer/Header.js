@@ -59,6 +59,7 @@ class Header extends Component {
             items: this.props.cartItems,
             "time": "11:30",
             "latitude": lat,
+            "orderStatus": "Being Prepared", 
             "longitude": lng
             });
             axios.post('http://credit.17-356.isri.cmu.edu/api/transactions', {
