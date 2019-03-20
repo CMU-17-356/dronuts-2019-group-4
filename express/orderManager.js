@@ -91,9 +91,27 @@ const allOrders = () => {
   }
 }
 
+const allUndoneOrders = () => {
+  loadDatabase()
+  if(dbLoaded) {
+    database.collection(mongoUtil.ORDER_COLLECTION_NAME).find({"completed": false}).toArray(
+      function(err, result) {
+        if(err){
+          return databaseError(err)
+        }
+        else{
+          return successResponse(result)
+        }
+      })
+  } else {
+    return unloadedDatabaseResponse
+  }
+}
+
 module.export = {
   addOrder,
   markOrderDone,
   updateOrder,
-  allOrders
+  allOrders,
+  allUndoneOrders
 }

@@ -69,6 +69,9 @@ apiRouter.post("/allOrders", function(req, res, next) {
 	return orderManager.allOrders()
 })
 
+apiRouter.post("/allUndoneOrders", function(req, res, next) {
+	return orderManager.allUndoneOrders()
+})
 
 // returns a list of all available products that we deliver
 apiRouter.post("/allItems", function(req, res, next) {
@@ -151,7 +154,7 @@ apiRouter.get("/getFreeDrone", function(req, res, next) {
 	droneManager.getFreeDrone((id) => res.json(successResponse({droneID: id})))
 })
 
-apiRouter.get("fillOrder", function(req, res, next) {
+apiRouter.post("/fillOrder", function(req, res, next) {
 	const lat = req.body.latitude
 	const lon = req.body.longitude
 	const droneID = req.body.droneID
