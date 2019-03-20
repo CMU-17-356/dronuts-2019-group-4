@@ -10,73 +10,7 @@ class EmployeePage extends Component {
 	constructor() {
 		super();
 		this.state = {
-			orders: [{
-                    "items": [{
-                            "id": 1,
-                            "name": "Brocolli - 1 Kg",
-                            "image": "https://res.cloudinary.com/sivadass/image/upload/v1493620046/dummy-products/broccoli.jpg",
-                            "quantity": "3"
-                          },
-                          {
-                            "id": 1,
-                            "name": "Cauliflower - 1 Kg",
-                            "image": "https://res.cloudinary.com/sivadass/image/upload/v1493620046/dummy-products/cauliflower.jpg",
-                            "quantity": "2"
-                          },
-                          {
-                            "id": 1,
-                            "name": "Cucumber - 1 Kg",
-                            "image": "https://res.cloudinary.com/sivadass/image/upload/v1493620046/dummy-products/cucumber.jpg",
-                            "quantity": "1"
-                          }],
-                     "latitude" : 40.442169,
-                     "time": "11:30",
-                     "longitude" : -79.994957,
-                     "orderID":0,
-
-                    },
-                    {
-                    "items": [{
-                            "id": 1,
-                            "name": "Brocolli - 1 Kg",
-                            "image": "https://res.cloudinary.com/sivadass/image/upload/v1493620046/dummy-products/broccoli.jpg",
-                            "quantity": "3"
-                          },
-                          {
-                            "id": 1,
-                            "name": "Cucumber - 1 Kg",
-                            "image": "https://res.cloudinary.com/sivadass/image/upload/v1493620046/dummy-products/cucumber.jpg",
-                            "quantity": "1"
-                          }],
-                     "time": "11:35",
-                     "latitude" : 40.442169,
-                     "longitude" : -79.994957,
-                       "orderID":1,
-                    },
-                    {
-                    "items": [{
-                            "id": 1,
-                            "name": "Brocolli - 1 Kg",
-                            "image": "https://res.cloudinary.com/sivadass/image/upload/v1493620046/dummy-products/broccoli.jpg",
-                            "quantity": "2"
-                          },
-                          {
-                            "id": 1,
-                            "name": "Cauliflower - 1 Kg",
-                            "image": "https://res.cloudinary.com/sivadass/image/upload/v1493620046/dummy-products/cauliflower.jpg",
-                            "quantity": "1"
-                          },
-                          {
-                            "id": 1,
-                            "name": "Cucumber - 1 Kg",
-                            "image": "https://res.cloudinary.com/sivadass/image/upload/v1493620046/dummy-products/cucumber.jpg",
-                            "quantity": "3"
-                          }],
-                     "time": "11:38",
-                     "latitude" : 40.442169,
-                     "longitude" : -79.994957,
-                     "orderID":2,
-                    }],
+			orders: [],
             message: "Haven't heard from the express server yet..",
             drones: []
 		}
@@ -114,35 +48,23 @@ class EmployeePage extends Component {
 
      // Add to Cart
     deleteItem(id) {
-         var droneID = Number(prompt("Specify drone:", "Drone Options are " + this.state.drones));
-         const url =
-              'http://drones.17-356.isri.cmu.edu/api/drones/' + droneID;
-         console.log(droneID);
-         console.log(this.state.drones);
-         console.log(this.state.drones.indexOf(droneID));
-         if (this.state.drones.indexOf(droneID) >= 0) {
-            axios.get(url).then(response => {
-              console.log(response.data)
-              if (response.data.current_delivery.status != "in_route"){
-                    var order = this.state.orders.filter(el => el.orderID == id )[0];
-                    console.log(order);
 
-                    axios.put('http://drones.17-356.isri.cmu.edu/api/drones/' + droneID + '/send', {
-                    "lat": order.latitude,
-                    "lon": order.longitude,
-                    }).then(response => {
-                        this.setState(prevState => ({
-                            orders: prevState.orders.filter(el => el.orderID != id )
-                            }));
-                    });
+        axios.get("api/getFreeDrone").then(response => {
+            var order = this.state.orders.filter(el => el.orderID == id )[0];
+            console.log(order);
 
-              }else{
-                alert("Drone Already in Route");
-              }
+            axios.post("api/fillOrder", {
+            "lat": order.latitude,
+            "lon": order.longitude,
+            "droneID": response.droneID,
+            "orderID": order.orderID,
+            }).then(response => {
+                this.setState(prevState => ({
+                    orders: prevState.orders.filter(el => el.orderID != id )
+                    }));
             });
-        }else {
-           alert("Invalid Drone Id");
-        }
+
+          });
 
         console.log(id);
 
