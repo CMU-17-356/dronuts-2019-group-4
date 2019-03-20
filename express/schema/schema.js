@@ -22,18 +22,17 @@ const itemSchema = Joi.object({
     name: Joi.string().required(),
     price:  Joi.number().integer().required(),
     image: Joi.string().required(),
-
-
 })
 
 const droneSchema = Joi.object({
 	id: Joi.string().required(),
 	dateAdded: Joi.date().format('MM-DD-YYYY').required(),
-	deliveries: Joi.number().integer().positive()
+	deliveries: Joi.number().integer().positive(),
+	atBase: Joi.boolean()
 })
 
 const orderSchema = Joi.object({
-    id: Joi.string(),
+  id: Joi.string(),
 	address: Joi.object({
 			number: Joi.number().integer().positive().required(),
 			streetname: Joi.string().required(),
@@ -52,7 +51,9 @@ const orderSchema = Joi.object({
     price_cents: Joi.number().integer().min(0).max(99),
 	user: Joi.string(), // username of the user ordering
 	time:Joi.string(),
-	timeOrdered: Joi.number().positive().integer().strict() // time in milliseconds
+	timeOrdered: Joi.number().positive().integer().strict(), // time in milliseconds
+	completed: Joi.boolean(),
+	hasAssignedDrone: Joi.boolean(),
 })
 
 module.exports = {
