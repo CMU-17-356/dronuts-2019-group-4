@@ -26,7 +26,7 @@ const successResponse = (payload) => {
 	}
 }
 
-modules.export = {
+module.exports = {
   unloadedDatabaseResponse,
   invalidFormatResponse,
   databaseError,

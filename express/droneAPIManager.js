@@ -1,10 +1,7 @@
 const droneAPIURL = "http://drones.17-356.isri.cmu.edu/api/"
 const fetch = require("node-fetch")
-}
 
-
-const maxAirbaseID = 1
-
+const maxAirbaseID = 5
 
 const sendDroneWithLocation = (droneID, latitude, longitude) => {
   const endpoint = droneAPIURL + "drones/" + droneID.toString() + "/send"

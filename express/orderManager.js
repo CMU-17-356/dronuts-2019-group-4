@@ -1,5 +1,5 @@
 const path = require('path')
-const mongoUtil = require(path.join(__dirname,'../mongoUtil'))
+const mongoUtil = require(path.join(__dirname,'mongoUtil'))
 const ORDER_COLLECTION_NAME = mongoUtil.ORDER_COLLECTION_NAME
 
 const {
@@ -7,7 +7,7 @@ const {
   invalidFormatResponse,
   databaseError,
   successResponse
-} = require(path.join(__dirname, '../serverResponses'))
+} = require(path.join(__dirname, 'serverResponses'))
 
 const BaseJoi = require('joi')
 const Extension = require('joi-date-extensions')
@@ -36,7 +36,6 @@ const addOrder = (order) => {
         console.log("Add Order wasn't correctly formatted")
         return invalidFormatResponse(err)
       } else {
-        const
         const newValue = Object.assign({"orderID": orderID, "completed": false}, value)
         database.collection(ORDER_COLLECTION_NAME).insertOne(newValue)
         return successResponse(newValue)

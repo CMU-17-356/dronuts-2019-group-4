@@ -1,16 +1,16 @@
 const path = require('path')
 
-const mongoUtil = require(path.join(__dirname,'../mongoUtil'))
+const mongoUtil = require(path.join(__dirname,'mongoUtil'))
 const DRONE_COLLECTION_NAME = mongoUtil.DRONE_COLLECTION_NAME
 
-const droneAPI = require(path.join(__dirname,'/droneAPIManager'))
+const droneAPI = require(path.join(__dirname,'droneAPIManager'))
 
 const {
   unloadedDatabaseResponse,
   invalidFormatResponse,
   databaseError,
   successResponse
-} = require(path.join(__dirname, '../serverResponses'))
+} = require(path.join(__dirname, 'serverResponses'))
 
 const BaseJoi = require('joi')
 const Extension = require('joi-date-extensions')
@@ -38,6 +38,8 @@ const getFreeDrone = (next) => {
 const sendDrone = (droneID, lat, lon) => {
   droneAPIManager.sendDroneWithLocation(droneID, lat, lon)
 }
+
+/*
 
 const addDrone = (drone) => {
 	loadDatabase()
@@ -106,11 +108,12 @@ const allDrones = () => {
 		response unloadedDatabaseResponse
 	}
 }
+*/
 
-modules.export {
+module.exports  = {
     sendDrone,
 		getFreeDrone,
-		addDrone,
-		returnDrone,
-		allDrones
+		// addDrone,
+		// returnDrone,
+		// allDrones
 }

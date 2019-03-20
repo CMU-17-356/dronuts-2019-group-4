@@ -39,7 +39,7 @@ const loadDatabase = () => {
 // takes in an order, generates an orderID and sends back the orderID which is generated here
 apiRouter.post("/addOrder", function(req, res, next) {
 	res.json(orderManager.addOrder(req.body))
-}
+})
 
 // takes in a string (order Id), and marks it as completed in the database
 apiRouter.post("/markOrderDone", function(req, res, next) {
@@ -147,26 +147,6 @@ apiRouter.post("/getUserInfo", function(req, res, next) {
 	}
 })
 
-// takes in a drone and adds it to the database
-// only returns success or failure
-apiRouter.post("/addDrone", function(req, res, next) {
-	res.json(droneManager.addDrone(req.body))
-})
-
-// update drone and replaces it based on id value
-apiRouter.post("/updateDrone", function(req, res, next) {
-	res.json(droneManager.returnDrone(req.body))
-})
-
-apiRouter.post("/returnDrone", function(req, res, next) {
-	res.json(droneManager.returnDrone(req.body))
-})
-
-// returns all drone information
-apiRouter.post("/allDrones", function(req, res, next) {
-	res.json(droneManager.allDrones())
-})
-
 apiRouter.get("/getFreeDrone", function(req, res, next) {
 	droneManager.getFreeDrone((id) => res.json(successResponse({droneID: id})))
 })
@@ -178,6 +158,7 @@ apiRouter.get("fillOrder", function(req, res, next) {
 	const orderID = req.body.orderID
 	orderManager.markOrderDone(orderID)
 	droneManager.sendDroneWithLocation(droneID, lat, lon)
+	res.json(successResponse())
 })
 
 module.exports = apiRouter
