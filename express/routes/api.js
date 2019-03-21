@@ -83,14 +83,12 @@ apiRouter.post("/addOrder", function(req, res, next) {
 apiRouter.post("/updateOrder", function(req, res, next) {
 	loadDatabase()
 	if(dbLoaded) {
-		var reqJSON = JSON.parse(req)
-		Joi.validate(reqJSON, testSchema, (err, value) => {
+		Joi.validate(req.body, testSchema, (err, value) => {
 			if(err) {
 				console.log("Update Order wasn't correctly formatted")
 				res.json(invalidFormatResponse(err))
 			} else {
-			    console.log(value);
-				database.collection(ORDER_COLLECTION_NAME).deleteOne({"orderID": value.orderID});
+				database.collection(ORDER_COLLECTION_NAME).findOneAndReplace({"orderID": value.orderID}, value)
 				res.json(successResponse("Updated order"))
 			}
 		})
