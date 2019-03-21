@@ -22,4 +22,4 @@ deploy:
   provider: script
   script: docker-compose --file docker-compose.prod.yml up -d --remove-orphans
   on:
-    branch: fix_api_interaction_bugs
+    branch: master
