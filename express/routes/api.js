@@ -89,6 +89,7 @@ apiRouter.post("/updateOrder", function(req, res, next) {
 				console.log("Update Order wasn't correctly formatted")
 				res.json(invalidFormatResponse(err))
 			} else {
+			    console.log(value);
 				database.collection(ORDER_COLLECTION_NAME).findOneAndReplace({"orderID": value.orderID}, value)
 				res.json(successResponse("Updated order"))
 			}

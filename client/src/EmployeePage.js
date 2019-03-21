@@ -57,7 +57,7 @@ class EmployeePage extends Component {
          if (this.state.drones.indexOf(droneID) >= 0) {
             axios.get(url).then(response => {
               console.log(response.data)
-              if (response.data.current_delivery.status != "in_route"){
+              if (response.data.current_delivery == null || response.data.current_delivery.status != "in_route"){
                     var order = this.state.orders.filter(el => el.orderID == id )[0];
                     console.log(order);
 
