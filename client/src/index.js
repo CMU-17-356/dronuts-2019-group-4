@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import EmployeePage from './EmployeePage';
+import OrderStatus from './OrderStatus';
 import * as serviceWorker from './serviceWorker';
 
 
@@ -13,6 +14,7 @@ ReactDOM.render((
     <div>
         <Route exact path='/' component={App}/>
         <Route path="/employees" component={EmployeePage} />
+        <Route path="/myorders" component={OrderStatus} />
       </div>
   </BrowserRouter>
 ), document.getElementById('root'));

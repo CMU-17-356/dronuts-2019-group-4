@@ -1,4 +1,3 @@
-
 var schema = require('./../schema/schema.js');
 
 
@@ -35,7 +34,7 @@ describe('Test Order Schema', () => {
         id: 3 ,
         image: "https://res.cloudinary.com/sivadass/image/upload/v1493620046/dummy-products/cucumber.jpg" ,
         name: "Cucumber - 1 Kg" ,
-        price: 48 , 
+        price: 48 ,
         quantity: 1}],
     price_dollars: 23,
     price_cents: 45,

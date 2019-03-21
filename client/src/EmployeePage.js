@@ -11,7 +11,8 @@ class EmployeePage extends Component {
 		super();
 		this.state = {
 			orders: [],
-               message: "Haven't heard from the express server yet.."
+            message: "Haven't heard from the express server yet..",
+            drones: []
 		}
 	}
 
@@ -19,7 +20,6 @@ class EmployeePage extends Component {
 
 
 	getOrders() {
-	    //TODO change url to proper url
 	    const url =
 	      "api/allOrders"; //GET actual from express backend
 	    axios.post(url).then(response => {
@@ -27,18 +27,47 @@ class EmployeePage extends Component {
 	        orders: response.data
 	      });
 	    });
+
+    }
+
+    getDrones() {
+        const url =
+	      'http://drones.17-356.isri.cmu.edu/api/airbases/dronuts_group_4';
+	    axios.get(url).then(response => {
+	      this.setState({
+	        drones: response.data.drones
+	      });
+	      console.log(this.state.drones);
+	    });
     }
 
 	componentWillMount() {
 		this.getOrders();
+		this.getDrones();
 	}
 
      // Add to Cart
     deleteItem(id) {
-    console.log(id);
-   this.setState(prevState => ({
-        orders: prevState.orders.filter(el => el.orderID != id )
-    }));
+
+        axios.get("api/getFreeDrone").then(response => {
+            var order = this.state.orders.filter(el => el.orderID == id )[0];
+            console.log(order);
+
+            axios.post("api/fillOrder", {
+            "lat": order.latitude,
+            "lon": order.longitude,
+            "droneID": response.droneID,
+            "orderID": order.orderID,
+            }).then(response => {
+                this.setState(prevState => ({
+                    orders: prevState.orders.filter(el => el.orderID != id )
+                    }));
+            });
+
+          });
+
+        console.log(id);
+
 
   }
 

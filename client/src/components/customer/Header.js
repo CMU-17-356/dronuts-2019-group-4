@@ -1,13 +1,35 @@
 import React, { Component } from "react";
 import axios from "axios";
+import AddressInput from './AddressInput';
+import Geocode from "react-geocode";
 
 class Header extends Component {
   constructor(props) {
+    Geocode.setApiKey('AIzaSyDH60azLLKvgrMa1KMocCadsKzrSACC95o');
     super(props);
     this.state = {
+      address: {
+        street: '',
+        city: '',
+        state: '',
+        postalCode: '',
+        country: ''},
       showCart: false,
       cart: this.props.cartItems,
     };
+    this.onAddressChange = this.onAddressChange.bind(this);
+  }
+
+
+  onAddressChange(evt) {
+    const id = evt.target.id;
+    const val = evt.target.value;
+    console.log(id);
+    console.log(val);
+    let state = this.state;
+    console.log(state);
+    state.address[id] = val;
+    this.setState(state);
   }
 
   handleCart = (e) => {
@@ -17,24 +39,86 @@ class Header extends Component {
     });
   }
 
+  formatAddress(address) {
+        return address.street + ", " + address.city + ", " +
+        address.state + " " + address.postalCode + ", " + address.country
+
+
+
+  }
+
+
+
   handleCheckout(){
         //TODO also post order to backend
-        axios.post('api/addOrder', {
-        items: this.props.cartItems,
-        "time": "11:30"
-        });
-        axios.post('http://credit.17-356.isri.cmu.edu/api/transactions', {
-        "companyId": "dronuts_group_4",
-        "amount": this.props.total,
-      })
-      .then(function (response) {
-        console.log(response);
-        console.log(response.data.id)
-        window.location = 'http://credit.17-356.isri.cmu.edu?transaction_id=' + response.data.id;
+        console.log(this.state.address);
+        var addr = this.formatAddress(this.state.address);
+        console.log(addr);
+        Geocode.fromAddress(addr).then(
+        response => {
+            const { lat, lng } = response.results[0].geometry.location;
+            var cartItems = this.props.cartItems;
+            var address = this.state.address;
+            axios.post('http://credit.17-356.isri.cmu.edu/api/transactions', {
+            "companyId": "dronuts_group_4",
+            "amount": this.props.total,
+            })
+            .then(function (response) {
+                console.log(response);
+                console.log(response.data.id)
+                //window.location = 'http'://credit.17-356.isri.cmu.edu?transaction_id=' + response.data.id;
+                 var win = window.open('http://credit.17-356.isri.cmu.edu?transaction_id=' + response.data.id, '_blank');
+                 win.focus();
+                 var waitForPayment = function (id, cartItems, address, lat, lng) {
+                        console.log("here");
+                        axios.get('http://credit.17-356.isri.cmu.edu/api/transactions/' + id)
+                        .then(function (response) {
+                            console.log(response.data.status);
+                            if (response.data.status != "pending"){
 
-      }).catch(function (error) {
-        console.log(error);
-        });
+                               if(response.data.status == "approved"){
+
+                                    console.log(lat, lng);
+                                    axios.post('api/addOrder', {
+                                    items: cartItems,
+                                    "time": "11:30",
+                                    "latitude": lat,
+                                    "address" : address,
+                                    "orderStatus": "Being Prepared",
+                                    "longitude": lng
+                                    });
+
+                                }
+                                alert("Payment " + response.data.status);
+
+
+                            }else {
+                                setTimeout( function() {
+                                    waitForPayment(id, cartItems, address,lat, lng);
+                                }, 1000);
+                            }
+                        });
+
+                  };
+                 setTimeout( function() {
+                    console.log(cartItems);
+                    console.log(address);
+                    waitForPayment(response.data.id, cartItems, address, lat, lng);
+                }, 1000);
+
+            }).catch(function (error) {
+                console.log("ERRORED")
+                console.log(error);
+            });
+
+
+            },
+        error => {
+            alert("Invalid Address")
+            console.log(error);
+        }
+        );
+
 
   }
 
@@ -122,6 +206,14 @@ class Header extends Component {
 
           </button> ) : "" }
         </div>
+         <AddressInput
+            street={this.state.address.street}
+            city={this.state.address.city}
+            state={this.state.address.state}
+            postalCode={this.state.address.postalCode}
+            country={this.state.address.country}
+            onChange={this.onAddressChange}
+            />
         </div>
         </div>
         </header>
