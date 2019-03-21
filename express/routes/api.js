@@ -90,7 +90,7 @@ apiRouter.post("/updateOrder", function(req, res, next) {
 				res.json(invalidFormatResponse(err))
 			} else {
 			    const _id = new ObjectID(value._id);
-				database.collection(ORDER_COLLECTION_NAME).deleteOne({"_id": _id})
+				database.collection(ORDER_COLLECTION_NAME).findOneAndReplace({"_id": _id},value)
 				res.json(successResponse(value._id))
 			}
 		})
