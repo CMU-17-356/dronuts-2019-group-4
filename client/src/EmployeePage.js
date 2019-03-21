@@ -59,7 +59,7 @@ class EmployeePage extends Component {
             axios.get(url).then(response => {
               console.log(response.data)
               if (response.data.current_delivery == null || response.data.current_delivery.status != "in_route"){
-                    var order = this.state.orders.filter(el => el.orderID == id )[0];
+                    var order = this.state.orders.filter(el => el._id == id )[0];
                     console.log(order);
 
                     axios.put('http://drones.17-356.isri.cmu.edu/api/drones/' + droneID + '/send', {
@@ -100,7 +100,7 @@ class EmployeePage extends Component {
             id={item.orderID}
             deleteButton={this.deleteItem.bind(
               this,
-              item.orderID,
+              item._id,
             )}
           />
         );
