@@ -65,9 +65,12 @@ class EmployeePage extends Component {
                     "lat": order.latitude,
                     "lon": order.longitude,
                     }).then(response => {
-                        this.setState(prevState => ({
-                            orders: prevState.orders.filter(el => el.orderID != id )
-                            }));
+                        order.completed = true;
+                        console.log(order);
+                        axios.post("api/updateOrder", order).then(response => {
+                          this.getOrders();
+                        });
+
                     });
 
               }else{
