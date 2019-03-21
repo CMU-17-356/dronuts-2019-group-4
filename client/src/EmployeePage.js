@@ -21,7 +21,7 @@ class EmployeePage extends Component {
 
 	getOrders() {
 	    const url =
-	      "api/allOrders"; //GET actual from express backend
+	      "api/allUndoneOrders"; //GET actual from express backend
 	    axios.post(url).then(response => {
 	      this.setState({
 	        orders: response.data
