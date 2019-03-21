@@ -83,9 +83,7 @@ class Header extends Component {
                                     console.log(datetime);
                                     axios.post('api/addOrder', {
                                     items: cartItems,
-                                    "time": datetime,
-                                    "latitude": lat,
-                                    "longitude": lng
+                                    "time": datetime
                                     });
 
                                 }

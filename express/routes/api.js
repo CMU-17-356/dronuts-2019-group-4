@@ -42,7 +42,9 @@ const loadDatabase = () => {
 //})
 
 apiRouter.post("/addOrder", function(req, res, next) {
+    console.log("trying to add Order");
 	loadDatabase()
+	console.log("trying to add Order2");
 	if(dbLoaded) {
 		Joi.validate(req.body, testSchema, (err, value) => {
 			if(err) {
