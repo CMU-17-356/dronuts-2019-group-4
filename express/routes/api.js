@@ -37,8 +37,27 @@ const loadDatabase = () => {
 }
 
 // takes in an order, generates an orderID and sends back the orderID which is generated here
+//apiRouter.post("/addOrder", function(req, res, next) {
+//	res.json(orderManager.addOrder(req.body))
+//})
+
 apiRouter.post("/addOrder", function(req, res, next) {
-	res.json(orderManager.addOrder(req.body))
+	loadDatabase()
+	if(dbLoaded) {
+		Joi.validate(req.body, testSchema, (err, value) => {
+			if(err) {
+				console.log("Add Order wasn't correctly formatted")
+				res.json(invalidFormatResponse(err))
+			} else {
+				const newValue = Object.assign({"orderID": orderID, "completed": false}, value)
+				database.collection(ORDER_COLLECTION_NAME).insertOne(newValue)
+				res.json(successResponse(newValue))
+				orderID += 1
+			}
+		})
+	} else {
+		res.json(unloadedDatabaseResponse)
+	}
 })
 
 // takes in a string (order Id), and marks it as completed in the database
