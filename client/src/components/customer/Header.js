@@ -75,6 +75,7 @@ class Header extends Component {
                         .then(function (response) {
                             console.log(response.data.status);
                             if (response.data.status != "pending"){
+
                                if(response.data.status == "approved"){
 
                                     console.log(lat, lng);
@@ -88,6 +89,7 @@ class Header extends Component {
                                     });
 
                                 }
+                                alert("Payment " + response.data.status);
 
 
                             }else {
