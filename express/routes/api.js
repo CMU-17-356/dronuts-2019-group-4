@@ -88,8 +88,8 @@ apiRouter.post("/updateOrder", function(req, res, next) {
 				console.log("Update Order wasn't correctly formatted")
 				res.json(invalidFormatResponse(err))
 			} else {
-				database.collection(ORDER_COLLECTION_NAME).deleteOne({"orderID": value.orderID})
-				res.json(successResponse(value))
+				database.collection(ORDER_COLLECTION_NAME).deleteOne({"_id": ObjectId(value._id)})
+				res.json(successResponse(value._id))
 			}
 		})
 	} else {
