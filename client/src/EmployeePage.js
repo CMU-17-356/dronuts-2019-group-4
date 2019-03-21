@@ -67,7 +67,14 @@ class EmployeePage extends Component {
                     }).then(response => {
                         order.completed = true;
                         console.log(order);
-                        axios.post("api/updateOrder", order).then(response => {
+                        axios.post("api/updateOrder", {
+                                    completed: true,
+                                    items: order.items,
+                                    "time": order.time,
+                                    "latitude": order.latitude,
+                                    "longitude": order.longitude,
+                                    "orderID": order.orderID
+                                    }).then(response => {
                           this.getOrders();
                         });
 
