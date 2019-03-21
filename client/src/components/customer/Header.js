@@ -80,12 +80,11 @@ class Header extends Component {
                                     var currentdate = new Date();
                                     var datetime =  currentdate.getHours() + ":" + currentdate.getMinutes();
                                     console.log(lat, lng);
+                                    console.log(datetime);
                                     axios.post('api/addOrder', {
                                     items: cartItems,
                                     "time": datetime,
                                     "latitude": lat,
-                                    "address" : address,
-                                    "orderStatus": "Being Prepared",
                                     "longitude": lng
                                     });
 
