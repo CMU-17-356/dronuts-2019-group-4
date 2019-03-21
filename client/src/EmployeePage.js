@@ -23,6 +23,7 @@ class EmployeePage extends Component {
 	    const url =
 	      "api/allUndoneOrders"; //GET actual from express backend
 	    axios.post(url).then(response => {
+	        console.log(response.data);
 	      this.setState({
 	        orders: response.data
 	      });
@@ -68,7 +69,8 @@ class EmployeePage extends Component {
                         order.completed = true;
                         console.log(order);
                         axios.post("api/updateOrder", order).then(response => {
-                          this.getOrders();
+                           console.log(response);
+                           this.getOrders();
                         });
 
                     });
