@@ -1,7 +1,7 @@
 const droneAPIURL = "http://drones.17-356.isri.cmu.edu/api/"
 const fetch = require("node-fetch")
 
-const airbaseID = 4
+const airbaseID = "dronuts_group_4"
 
 const sendDroneWithLocation = (droneID, latitude, longitude) => {
   const endpoint = droneAPIURL + "drones/" + droneID.toString() + "/send"
@@ -39,7 +39,7 @@ const getDrone = (droneID, callback) => {
 }
 
 const getAirbase = (airbaseID, callback) => {
-  const endpoint = droneAPIURL + "airbases/" + airbaseID.toString()
+  const endpoint = droneAPIURL + "airbases/" + airbaseID
   return fetch(endpoint)
         .then((response) => {
           response.json().then((value) => {
