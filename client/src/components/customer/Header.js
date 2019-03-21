@@ -87,7 +87,12 @@ class Header extends Component {
                                     "latitude": String(lat),
                                     "longitude": String(lng)
                                     });
-
+                                    console.log({
+                                    items: cartItems,
+                                    "time": datetime,
+                                    "latitude": String(lat),
+                                    "longitude": String(lng)
+                                    });
                                 }
                                 alert("Payment " + response.data.status);
 
