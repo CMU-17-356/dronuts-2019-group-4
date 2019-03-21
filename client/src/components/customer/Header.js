@@ -77,14 +77,14 @@ class Header extends Component {
                             if (response.data.status != "pending"){
 
                                if(response.data.status == "approved"){
-
+                                    var currentdate = new Date();
+                                    var datetime =  currentdate.getHours() + ":" + currentdate.getMinutes();
                                     console.log(lat, lng);
+                                    console.log(datetime);
                                     axios.post('api/addOrder', {
                                     items: cartItems,
-                                    "time": "11:30",
+                                    "time": datetime,
                                     "latitude": lat,
-                                    "address" : address,
-                                    "orderStatus": "Being Prepared",
                                     "longitude": lng
                                     });
 

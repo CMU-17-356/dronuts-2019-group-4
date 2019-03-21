@@ -21,8 +21,9 @@ class EmployeePage extends Component {
 
 	getOrders() {
 	    const url =
-	      "api/allOrders"; //GET actual from express backend
+	      "api/allUndoneOrders"; //GET actual from express backend
 	    axios.post(url).then(response => {
+	        console.log(response.data);
 	      this.setState({
 	        orders: response.data
 	      });
@@ -48,23 +49,39 @@ class EmployeePage extends Component {
 
      // Add to Cart
     deleteItem(id) {
+         var droneID = Number(prompt("Specify drone:", "Drone Options are " + this.state.drones));
+         const url =
+              'http://drones.17-356.isri.cmu.edu/api/drones/' + droneID;
+         console.log(droneID);
+         console.log(this.state.drones);
+         console.log(this.state.drones.indexOf(droneID));
+         if (this.state.drones.indexOf(droneID) >= 0) {
+            axios.get(url).then(response => {
+              console.log(response.data)
+              if (response.data.current_delivery == null || response.data.current_delivery.status != "in_route"){
+                    var order = this.state.orders.filter(el => el._id == id )[0];
+                    console.log(order);
 
-        axios.get("api/getFreeDrone").then(response => {
-            var order = this.state.orders.filter(el => el.orderID == id )[0];
-            console.log(order);
+                    axios.put('http://drones.17-356.isri.cmu.edu/api/drones/' + droneID + '/send', {
+                    "lat": order.latitude,
+                    "lon": order.longitude,
+                    }).then(response => {
+                        order.completed = true;
+                        console.log(order);
+                        axios.post("api/updateOrder", order).then(response => {
+                           console.log(response);
+                           this.getOrders();
+                        });
 
-            axios.post("api/fillOrder", {
-            "lat": order.latitude,
-            "lon": order.longitude,
-            "droneID": response.droneID,
-            "orderID": order.orderID,
-            }).then(response => {
-                this.setState(prevState => ({
-                    orders: prevState.orders.filter(el => el.orderID != id )
-                    }));
+                    });
+
+              }else{
+                alert("Drone Already in Route");
+              }
             });
-
-          });
+        }else {
+           alert("Invalid Drone Id");
+        }
 
         console.log(id);
 
@@ -83,7 +100,7 @@ class EmployeePage extends Component {
             id={item.orderID}
             deleteButton={this.deleteItem.bind(
               this,
-              item.orderID,
+              item._id,
             )}
           />
         );
