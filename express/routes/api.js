@@ -69,7 +69,7 @@ apiRouter.post("/addOrder", function(req, res, next) {
 				console.log("Add Order wasn't correctly formatted")
 				res.json(invalidFormatResponse(err))
 			} else {
-				const newValue = Object.assign({"orderID": orderID}, value)
+				const newValue = Object.assign({"orderID": orderID, "completed": false}, value)
 				database.collection(ORDER_COLLECTION_NAME).insertOne(newValue)
 				res.json(successResponse(newValue))
 				orderID += 1
@@ -130,6 +130,25 @@ apiRouter.post("/allOrders", function(req, res, next) {
 	} else {
 		res.json(unloadedDatabaseResponse)
 	}
+
+})
+
+apiRouter.post("/allUndoneOrders", function(req, res, next) {
+	loadDatabase()
+	if(dbLoaded) {
+		database.collection(mongoUtil.ORDER_COLLECTION_NAME).find({"completed": false}).toArray(
+			function(err, result) {
+				if(err){
+					res.send(databaseError(err))
+				}
+				else{
+					res.json(result)
+				}
+			})
+	} else {
+		res.json(unloadedDatabaseResponse)
+	}
+
 })
 
 
