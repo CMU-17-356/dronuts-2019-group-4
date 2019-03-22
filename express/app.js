@@ -17,6 +17,7 @@ app.use(express.static(CLIENT_BUILD_PATH))
 app.use(express.json())
 
 app.get('*', function(request, response) {
+  console.log("djkfk")
   response.sendFile(path.join(CLIENT_BUILD_PATH, 'index.html'));
 });
 
@@ -33,5 +34,3 @@ mongoUtil.startMongo().then(() => {
 	database = mongoUtil.getDatabase()
 	app.listen(port, () => console.log("listening"))
 })
-
-

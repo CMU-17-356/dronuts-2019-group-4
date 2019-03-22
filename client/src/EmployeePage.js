@@ -23,10 +23,12 @@ class EmployeePage extends Component {
 	    const url =
 	      "api/allUndoneOrders"; //GET actual from express backend
 	    axios.post(url).then(response => {
-	        console.log(response.data);
-	      this.setState({
-	        orders: response.data
-	      });
+					if(response.data.success) {
+	        console.log(response.data.data);
+		      this.setState({
+		        orders: response.data.data
+		      });
+				}
 	    });
 
     }
@@ -68,13 +70,11 @@ class EmployeePage extends Component {
                     }).then(response => {
                         order.completed = true;
                         console.log(order);
-                        axios.post("api/updateOrder", order).then(response => {
+                        axios.post("api/markOrderDone", { orderID: order._id }).then(response => {
                            console.log(response);
                            this.getOrders();
                         });
-
                     });
-
               }else{
                 alert("Drone Already in Route");
               }
